@@ -1,0 +1,7 @@
+﻿{
+  "GraphAPI": "https://graph.facebook.com/",
+  "GroupID": "571121156756208",
+  "Fields": "?fields=feed{comments{id,message,comments{message,id}},full_picture,message,updated_time},posts{message,id,name}",
+  "Token": "EAAiWFpZCTZC1ABAGmTykvwd0wDJN7HJ9qFRTh2ckZC3pCtJaDALxhYbnv8ApRsZARUbZB6CW8mA5jdaLUnlkG1SorkFKuTybhemiOJcVVZC1hB0ZC6ZC2qbRusYDjVFibjU89oDBaur4kAqHAh9OqhlAZB2l0qj2wEp7eJKrKGqfcmgZDZD",
+  "FacebookFeedChannelID": "619919379148046356"
+}
