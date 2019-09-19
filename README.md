@@ -82,15 +82,15 @@ Sonnie has 3 config files that are loaded on upstart.
   - **Description:** This is the configuration file that handles the Facebook hook values. It contain informationen about how Sonnie should contact the [Facebook Graph API](https://developers.facebook.com/docs/graph-api/).
   - **Fields:**
     - **GraphAPI:** This is the link to Facebook Graph API. This field will be set as default. Unless you know exactly what you're doing don't modify this.
-    - **GroupID:** This is the ID for the Facebook group that Soonie should pull posts from. (See [How to Get Group ID]())
+    - **GroupID:** This is the ID for the Facebook group that Soonie should pull posts from. (See [How to Get Group ID](https://github.com/ZhakalenDk/SonnieTheBot/blob/master/README.md#how-to-get-facebook-group-id))
     - **Fields:** This defines which values to pull from facebook. This field is also set as default and unless you're 100% sure that you know exactly how to handle these values, don't modify this. If these fields are modified without setting Sonnie up for handling the new fields, he will crash with no exception.
     - **Token:** This is the Facebook Token that Sonnie will use to acces Facebooks API. (See [How to get Facebook Token](https://www.youtube.com/watch?v=_hF099c0A9M))
-    - **FacebookFeedChannelID:** This is the ID for the Facebook Feed channel on the Discord Server. (See [How To Get Discord Channel ID]())
+    - **FacebookFeedChannelID:** This is the ID for the Facebook Feed channel on the Discord Server. (See [How To Get Discord Channel ID](https://github.com/ZhakalenDk/SonnieTheBot/blob/master/README.md#how-to-get-dicord-text-channel-id))
 3. **[DiscordConfig.Json](https://github.com/ZhakalenDk/SonnieTheBot/blob/master/SonnyTheBot/DiscordBot/Data/DiscordConfig.Json)**
   - **Description:** This is the configuration file for setting up Sonnies link to the Discord server.
   - **Fields:**
-    - **SuggestionChannelID:** This is the channel that handles users suggestions for Sonnie (See [How To Get Discord Channel ID]())
-	  - **GeneralChannelID:** This is the general channel on the server. Sonnies main channel to communicate in. (See [How To Get Discord Channel ID]())
+    - **SuggestionChannelID:** This is the channel that handles users suggestions for Sonnie (See [How To Get Discord Channel ID](https://github.com/ZhakalenDk/SonnieTheBot/blob/master/README.md#how-to-get-dicord-text-channel-id))
+    - **GeneralChannelID:** This is the general channel on the server. Sonnies main channel to communicate in. (See [How To Get Discord Channel ID](https://github.com/ZhakalenDk/SonnieTheBot/blob/master/README.md#how-to-get-dicord-text-channel-id))
   
   ## How to get Facebook Group ID
   To get your Facebook Groups ID, go to Facebook and go to your group. In the Adress bar of your browser you will see the path to the group. In the adress you will find somehting simular to _Facebook/groups/[THIS IS YOUR GROUPS ID]/?ref=bookmarks_.
