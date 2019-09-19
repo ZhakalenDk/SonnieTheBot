@@ -1,7 +1,7 @@
 ﻿{
   "GraphAPI": "https://graph.facebook.com/",
-  "GroupID": "571121156756208",
+  "GroupID": "",
   "Fields": "?fields=feed{comments{id,message,comments{message,id}},full_picture,message,updated_time},posts{message,id,name}",
   "Token": "",
-  "FacebookFeedChannelID": "619919379148046356"
+  "FacebookFeedChannelID": ""
 }
