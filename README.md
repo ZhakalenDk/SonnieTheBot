@@ -7,7 +7,7 @@ He's based on a teacher from a Danish Education; Data. & Communication, GF2.
 
 Because he's based on a teacher he has some features directly linked to the teacher (_In a way his behavior is related to the teachers_).
 This means that Sonnie has some hidden "_commands_" that triggers when writing specific words or sentences.
-In the beginning he was supposed to only link Facebook and Discord, as we had some people in the class, who was not on Facebook. Now he has a lot more features than that.
+In the beginning he was supposed to only link Facebook and Discord, as we had some people in the class, who was not on Facebook. Now he has a lot more features than that. Sonnie, for example, loves programming and hates network. Try asking him about it ;)
 
 ## Features
 
@@ -28,6 +28,9 @@ If a user is online on Discord and the users activity status is changed to _Gami
 ###### Vacation Mode (See [Commands](https://github.com/ZhakalenDk/SonnieTheBot/blob/master/README.md#commands))
 Sonnie can be commanded to go into Vacation mode.
 While in vacation mode, Sonnie want check for porno.
+
+###### Suggestions (See [Commands](https://github.com/ZhakalenDk/SonnieTheBot/blob/master/README.md#commands))
+Sonnie can take in suggestions from users. These will be posted in a _Suggestion Channel_ (See [How To](https://github.com/ZhakalenDk/SonnieTheBot#how-to))
 
 ###### Commands
 Commands are executed in channel chat inside the Client application.
@@ -99,3 +102,13 @@ Sonnie has 3 config files that are loaded on upstart.
   Open Discord and go into your settings -> Appearance -> Enable Developer Mode.
   This will enable the developer mode, as you might have expected. However, now you can right click on almost anything in discord and in the bottom of the PopUp menu you should find "Copy ID".
   Go to the Text Channel you would like to get the ID for, and as stated above, right click on the channel and in the PopUp menu go to bottom and click on "_Copy ID_".
+  
+  # Contact
+  If there's any issues or if something in the _ReadMe_ is not clear enough, feel free to raise an **Issue**.
+  If you happen to build upon Sonnie, please ask for a merge request. I will look trough the changes and decide if it will be merged into the sourcecode.
+  
+  # Terms of Use
+  Lastly, credits should be given to the auther of this repository if you decide to use Sonnie on your Discord or change anything in his source.
+  I withhold all rights to change and/or deny merge requests made to this repository.
+  By using Sonnie you agree to only use him in a none commercial use.
+ 
