@@ -1,4 +1,4 @@
-#Curretly implemented commands:
+# Curretly implemented commands:
 - **Jeg er [Dit navn] - Fortæl Sonnie hvem du er. _Example: ;Jeg er "Sonnie Hansen"_**
 
 - **Hvem er [Tag en bruger] - Spørg Sonnie hvem en bruger er. _Example: ;Hvem er "@Sonnie"_**
