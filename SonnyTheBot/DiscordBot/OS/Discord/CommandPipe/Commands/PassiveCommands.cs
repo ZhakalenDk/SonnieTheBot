@@ -17,17 +17,39 @@ namespace DiscordBot.OS.Discord.CommandPipe.Commands
         [Summary ( "Sender dig en liste med all kommandoer\nExample: ;hjælp" )]
         public async Task Help ()
         {
-            //  Get the list of commands
+            await ReplyAsync ( "Jeg sender dig en liste!" );
 
             var sb = new StringBuilder ();
+            IGuildUser user = Context.User as IGuildUser;
+            await user.SendMessageAsync ( $"Det her kan jeg gøre:" );
 
-            IUser user = Context.User;
+            foreach ( string command in CommandHandler.cService.GetCommandsAsString () )
+            {
+                string cmdString = command;
+                //  If the command is an adming-command but the user is not an admin. Don't include the command
+                if ( command.ToLower ().Contains ( "admin" ) && !user.IsAdmin () )
+                {
+                    cmdString = string.Empty;
+                }
 
-            sb.AppendLine ( $"Det her kan jeg gøre, {user.Mention}{Environment.NewLine}Start alle kommandoer med ';'" );
-            sb.AppendLine ( CommandHandler.cService.GetAllCommands () );
+                /*
+                    If the current commands character length does not exceed the capacity of 2,000 characters.
+                    If it exceeds the capacity, post the current build string and clear the string builder.
+                    The proceed to build a new string with the remaining commands
+                */
+                if ( sb.Length + cmdString.Length <= 2000 )
+                {
+                    sb.Append ( cmdString );
+                }
+                else
+                {
+                    await user.SendMessageAsync ( sb.ToString () );
+                    sb.Clear ();
+                    sb.Append ( cmdString );
+                }
+            }
 
             await user.SendMessageAsync ( sb.ToString () );
-            await ReplyAsync ( "Jeg sender dig en liste!" );
         }
 
         [Command ( "Credits" )]

@@ -25,6 +25,10 @@ namespace DiscordBot.Data.Users
         /// THe nickname of the user, defined by discord
         /// </summary>
         public string Nickname { get; set; }
+        /// <summary>
+        /// Determines if the user is currently off school
+        /// </summary>
+        public bool Free { get; set; }
 
         /// <summary>
         /// 
@@ -48,19 +52,38 @@ namespace DiscordBot.Data.Users
             Name = _name;
             Mention = _mention;
         }
+
         /// <summary>
-        /// 
+        /// Use extended constructor <see cref="User (ulong, string, string, string, string)"/> instead
         /// </summary>
         /// <param name="_ID">The ID of the user</param>
         /// <param name="_name">THe custom name for the user</param>
         /// <param name="_mention">THe Mention tag for the user. Defined by discord</param>
-        /// <param name="_Nickname">The nickname of the user, defined by discord</param>
-        public User ( ulong _ID, string _name, string _mention, string _Nickname )
+        /// <param name="_nickname">The nickname of the user, defined by discord</param>
+        [Obsolete ( "Use extended constructer instead" )]
+        public User ( ulong _ID, string _name, string _mention, string _nickname )
         {
             ID = _ID;
             Name = _name;
             Mention = _mention;
-            Nickname = _Nickname;
+            Nickname = _nickname;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_ID">THe ID of the user</param>
+        /// <param name="_name">THe name of the user</param>
+        /// <param name="_mention">THe users tag</param>
+        /// <param name="_nickname">THe users nickname</param>
+        /// <param name="_free">Wether or not the user is currently off school</param>
+        public User ( ulong _ID, string _name, string _mention, string _nickname, string _free )
+        {
+            ID = _ID;
+            Name = _name;
+            Mention = _mention;
+            Nickname = _nickname;
+
+            Free = ( ( _free.ToLower () == "true" ) ? ( true ) : ( false ) );
         }
         /// <summary>
         /// Set a new custom name
@@ -79,16 +102,16 @@ namespace DiscordBot.Data.Users
         public static ulong GetIDFromMention ( string _mention )
         {
             //  Check which prefix to split by
-            char prefix = ((_mention.Contains ( "!" )) ? ('!') : ('@'));
+            char prefix = ( ( _mention.Contains ( "!" ) ) ? ( '!' ) : ( '@' ) );
 
-            ulong ID = ulong.Parse ( _mention.Split ( prefix )[1].Split ( ">" )[0] );
+            ulong ID = ulong.Parse ( _mention.Split ( prefix ) [ 1 ].Split ( ">" ) [ 0 ] );
 
             return ID;
         }
 
         public override string ToString ()
         {
-            return $"{Name}, [{ID}], {Mention}, {Nickname}";
+            return $"{ID}:{Name}:{Mention}:{Nickname}:{Free.ToString ()}";
         }
     }
 }

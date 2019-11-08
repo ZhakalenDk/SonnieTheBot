@@ -8,24 +8,34 @@ namespace DiscordBot.OS.Extensions
     public static class DiscordCommandServiceExtensions
     {
         /// <summary>
-        /// Get all the available commands
+        /// Get all the available commands as string representations
         /// </summary>
         /// <param name="_service"></param>
         /// <returns></returns>
-        public static string GetAllCommands ( this CommandService _service )
+        public static List<string> GetCommandsAsString ( this CommandService _service )
         {
-            StringBuilder sb = new StringBuilder ();
+            List<string> commandsList = new List<string> ();
 
             //  The list of commands
             List<CommandInfo> commandInfo = _service.Commands.ToList ();
 
             //  Loop trough each commands and build a line with the information
-            foreach (CommandInfo command in commandInfo)
+            foreach ( CommandInfo command in commandInfo )
             {
-                sb.AppendLine ( $"```{command.Name} - {command.Summary}```" );
+                commandsList.Add ( $"```{command.Name} - {command.Summary}```" );
             }
 
-            return sb.ToString ();
+            return commandsList;
+        }
+
+        /// <summary>
+        /// Get all commands
+        /// </summary>
+        /// <param name="_service"></param>
+        /// <returns></returns>
+        public static List<CommandInfo> GetAllCommands ( this CommandService _service )
+        {
+            return _service.Commands.ToList ();
         }
     }
 }

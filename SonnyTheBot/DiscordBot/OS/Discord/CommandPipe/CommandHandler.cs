@@ -8,6 +8,7 @@ using Discord.Commands;
 using Microsoft.Extensions.Configuration;
 using DiscordBot.Data.Users;
 using DiscordBot.OS.System;
+using DiscordBot.OS.System.Time;
 
 namespace DiscordBot.OS.Discord.CommandPipe
 {
@@ -60,7 +61,7 @@ namespace DiscordBot.OS.Discord.CommandPipe
             //Debug.Log.Message ( _rawMessage.ToString () );
 
             //  Make sure the message is of the right type and the message was from a user and not a bot
-            if (!(_rawMessage is SocketUserMessage message) || message.Source != MessageSource.User)
+            if ( !( _rawMessage is SocketUserMessage message ) || message.Source != MessageSource.User )
             {
                 return;
             }
@@ -70,7 +71,7 @@ namespace DiscordBot.OS.Discord.CommandPipe
 
             //  If the word network or netværk is in a message
             #region Network is for Losers check
-            if (message.Content.ToLower ().Contains ( "network" ) || message.Content.ToLower ().Contains ( "netværk" ))
+            if ( message.Content.ToLower ().Contains ( "network" ) || message.Content.ToLower ().Contains ( "netværk" ) )
             {
                 await message.Channel.SendMessageAsync ( $"Netværk er for tabere, {message.Author.Mention}!" );
 
@@ -81,10 +82,11 @@ namespace DiscordBot.OS.Discord.CommandPipe
                 #region If user is not in collection add the user
                 var loser = server.GetUser ( message.Author.Id );
                 User rawUser = UserManager.SearchUserByID ( loser.Id );
-                if (rawUser == null)
+                if ( rawUser == null )
                 {
                     User user = new User ( loser.Id, "Ivan", loser.Mention, loser.Nickname );
-                    await DataScanner.WriteToFile ( UserManager.GetUserList () );
+                    DataScanner<User> scanner = new DataScanner<User> ( @"\Data\Users\STB.UP" );
+                    await scanner.WriteToFile ( UserManager.GetUserList () );
                     UserManager.AddUser ( user );
                 }
                 else
@@ -93,9 +95,9 @@ namespace DiscordBot.OS.Discord.CommandPipe
                 }
                 #endregion
                 #region If user is not an admin chance nickname to "Taber"
-                foreach (var role in loser.Roles)
+                foreach ( var role in loser.Roles )
                 {
-                    if (role == server.GetRole ( 614097428756299784 ))
+                    if ( role == server.GetRole ( 614097428756299784 ) )
                     {
                         return;
                     }
@@ -108,7 +110,7 @@ namespace DiscordBot.OS.Discord.CommandPipe
             #endregion
 
             #region Programming is the way forward check
-            if (message.Content.ToLower ().Contains ( "programmering" ) || message.Content.ToLower ().Contains ( "code" ))
+            if ( message.Content.ToLower ().Contains ( "programmering" ) || message.Content.ToLower ().Contains ( "code" ) )
             {
                 await message.Channel.SendMessageAsync ( $"Programmering er vejen frem, {message.Author.Mention}!" );
                 return;
@@ -116,7 +118,7 @@ namespace DiscordBot.OS.Discord.CommandPipe
             #endregion
 
             #region Say Sorry to the Bot
-            if (message.Content.ToLower ().Contains ( ($"undskyld sonnie") ))
+            if ( message.Content.ToLower ().Contains ( ( $"undskyld sonnie" ) ) )
             {
                 var server = this.client.GetGuild ( 614042459957362698 );
                 Debug.Log.Message ( server.Name.ToString () );
@@ -124,9 +126,9 @@ namespace DiscordBot.OS.Discord.CommandPipe
                 User rawUser = UserManager.SearchUserByID ( loser.Id );
 
                 #region If the User is not an admin
-                foreach (var role in loser.Roles)
+                foreach ( var role in loser.Roles )
                 {
-                    if (role == server.GetRole ( 614097428756299784 ))
+                    if ( role == server.GetRole ( 614097428756299784 ) )
                     {
                         await message.Channel.SendMessageAsync ( $"Du skal da ikke undskylde for noget, {message.Author.Mention}" );
                         return;
@@ -135,7 +137,7 @@ namespace DiscordBot.OS.Discord.CommandPipe
                 #endregion
 
                 #region Give the user his Nickname back
-                if (rawUser != null)
+                if ( rawUser != null )
                 {
                     await loser.ModifyAsync ( user => user.Nickname = rawUser.Nickname );
                     await message.Channel.SendMessageAsync ( $"Det er så okay, {message.Author.Mention}!" );
@@ -147,18 +149,25 @@ namespace DiscordBot.OS.Discord.CommandPipe
             #region Citater
 
             #region Diktatur
-            if (message.Content.ToLower () == "hvad er det her?")
+            if ( message.Content.ToLower () == "hvad er det her?" )
             {
                 await message.Channel.SendMessageAsync ( $"Det her er et diktatur, {message.Author.Mention}. Og diktatoren må skide i hjørnerne!" );
+            }
+            #endregion
+
+            #region FuckDeAndreNiveau
+            if ( message.Content.ToLower () == "hvad arbejder vi ud fra?" )
+            {
+                await message.Channel.SendMessageAsync ( $"Vi arbejder ud fra \"Fuck De Andre Niveau\", {message.Author.Mention}! " );
             }
             #endregion
 
             #endregion
 
             var argPos = 0;
-            char prefix = char.Parse ( this.config["Prefix"] );
+            char prefix = char.Parse ( this.config [ "Prefix" ] );
 
-            if (!(message.HasMentionPrefix ( this.client.CurrentUser, ref argPos ) || message.HasCharPrefix ( prefix, ref argPos )))
+            if ( !( message.HasMentionPrefix ( this.client.CurrentUser, ref argPos ) || message.HasCharPrefix ( prefix, ref argPos ) ) )
             {
                 return;
             }
@@ -177,13 +186,13 @@ namespace DiscordBot.OS.Discord.CommandPipe
         /// <returns></returns>
         public async Task ExecuteCommandAsync ( Optional<CommandInfo> _command, ICommandContext _context, IResult _result )
         {
-            if (!_command.IsSpecified)
+            if ( !_command.IsSpecified )
             {
                 Debug.Log.Message ( $"CommandHandler - Failed to execute for [{_command.Value.Name}] <-> [{_context.User}]!" );
                 return;
             }
 
-            if (_result.IsSuccess)
+            if ( _result.IsSuccess )
             {
                 Debug.Log.Message ( $"CommandHandler - Executed [{_command.Value.Name}] for -> [{_context.User}]" );
                 return;

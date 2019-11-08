@@ -12,79 +12,134 @@ namespace DiscordBot.OS.System
     /// <summary>
     /// Represents an object to Write/Read from an UTP.UP file
     /// </summary>
-    public static class DataScanner
+    public class DataScanner<T>
     {
         /// <summary>
-        /// The path to the STB.UP file
+        /// The path to the specific file
         /// </summary>
-        private static readonly string path = Path.GetDirectoryName ( Assembly.GetExecutingAssembly ().Location ) + @"\Data\Users\STB.UP";
+        private readonly string path;
 
         /// <summary>
-        /// Save all users to the STB.UP file
+        /// Write a range of data objects to file
         /// </summary>
-        /// <param name="_users">The list of users</param>
+        /// <param name="_list">The list of objects to write</param>
         /// <returns></returns>
-        public static async Task WriteToFile ( List<User> _users )
+        public async Task WriteToFile ( List<T> _list )
         {
-            Debug.Log.Message ( "DataScanner - Writing user data to file" );
+            Debug.Log.Message ( "DataScanner - Writing data to file" );
             string fileContent = string.Empty;
 
             //  Loop trough the list of users
-            foreach (User user in _users)
+            foreach ( T item in _list )
             {
                 //  Build the content string to write to the file
-                fileContent += $"{user.ID}:{user.Name}:{user.Mention}:{user.Nickname}\n";
+                fileContent += $"{item.ToString ()}\n";
             }
 
             //  Write all data to file
-            await File.WriteAllTextAsync ( path, fileContent );
+            await File.WriteAllTextAsync ( this.path, fileContent );
 
         }
 
         /// <summary>
-        /// Collect every user from the STB.UP file
+        /// Write a single string value to a file
+        /// </summary>
+        /// <param name="_value">The stirng value to write</param>
+        /// <returns></returns>
+        public async Task WriteToFile ( string _value )
+        {
+            Debug.Log.Message ( "DataScanner - Writing data to file" );
+            string fileContent = string.Empty;
+            //  Build the content string to write to the file
+            fileContent += $"{_value}\n";
+
+            //  Write all data to file
+            await File.WriteAllTextAsync ( this.path, fileContent );
+        }
+
+        /// <summary>
+        /// Collect data from file and seperate it by ':'
         /// </summary>
         /// <returns></returns>
-        public static List<User> ReadFromFile ()
+        public List<DataContainer> ReadFromFile ( char _breakBy )
         {
+            //  THe list to return
+            string [] lineValues = null;
+            List<DataContainer> data = new List<DataContainer> ();
+
             //  File content
             string file;
 
-            //  The list of users to return
-            List<User> users = new List<User> ();
-            Debug.Log.Message ( "DataScanner - Reading Users from file" );
+            Debug.Log.Message ( "DataScanner - Reading items from file" );
 
             //  Read all data from the STB.UP file
-            using (StreamReader reader = new StreamReader ( path ))
+            using ( StreamReader reader = new StreamReader ( this.path ) )
             {
                 file = reader.ReadToEndAsync ().Result;
             }
 
             //  Split up the content string by lines
-            string[] fileLines = file.Split ( "\n" );
+            string [] fileLines = file.Split ( "\n" );
 
             //  Loop trough the content lines
-            foreach (string line in fileLines)
+            foreach ( string line in fileLines )
             {
                 //  If a line is empty break out of the loop
-                if (line.Length == 0)
+                if ( line.Length == 0 )
                 {
                     break;
                 }
 
+                Debug.Log.Message ( $"DataScanner - Reading ({line}) breaking by ({_breakBy})" );
+
                 //  Split the string up into the appropriate values
-                string[] userValues = line.Split ( ':' );
-
-                //  Build the user object
-                User user = new User ( ulong.Parse ( userValues[0] ), userValues[1], userValues[2], userValues[3] );
-
-                Debug.Log.Message ( $"DataScanner - Reading ({user})" );
-
-                //  Add the user to the user list
-                users.Add ( user );
+                lineValues = line.Split ( _breakBy );
+                data.Add ( new DataContainer ( lineValues ) );
             }
 
-            return users;
+            return data;
+        }
+
+        /// <summary>
+        /// Read a single line from a file
+        /// </summary>
+        /// <param name="_LineNumber">Which line to read from file</param>
+        /// <returns></returns>
+        public DataContainer? ReadFromFile ( int _LineNumber )
+        {
+
+            //  The value to return
+            DataContainer? data = null;
+
+            //  File content
+            string file;
+
+            Debug.Log.Message ( "DataScanner - Reading item from file" );
+
+            //  Read all data from the STB file
+            using ( StreamReader reader = new StreamReader ( this.path ) )
+            {
+                file = reader.ReadToEndAsync ().Result;
+            }
+
+            string [] fileLines = file.Split ( '\n' );
+
+            if ( fileLines [ 0 ].Length > 0 )
+            {
+                data = new DataContainer ( fileLines [ _LineNumber ] );
+                Debug.Log.Message ( $"DataScanner - Reading ({data.Value [ 0 ]})" );
+            }
+
+            return data;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_path">The path to the file that contains the data</param>
+        public DataScanner ( string _path )
+        {
+            this.path = Path.GetDirectoryName ( Assembly.GetExecutingAssembly ().Location ) + _path;
         }
     }
 }

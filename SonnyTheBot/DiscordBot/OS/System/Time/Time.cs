@@ -34,5 +34,10 @@ namespace DiscordBot.OS.System.Time
             this.minutes = _minutes;
             this.seconds = _seconds;
         }
+
+        public override string ToString ()
+        {
+            return $"{this.hours}, {this.minutes}, {this.seconds}";
+        }
     }
 }

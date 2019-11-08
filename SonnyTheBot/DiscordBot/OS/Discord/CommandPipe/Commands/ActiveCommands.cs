@@ -23,7 +23,7 @@ namespace DiscordBot.OS.Discord.CommandPipe.Commands
             User user = UserManager.SearchUserByID ( Context.Message.Author.Id );
 
             //  If no user was found, create a new User object and add it to the list
-            if (user == null)
+            if ( user == null )
             {
                 user = new User ( Context.User.Id, _name, Context.User.Mention );
                 UserManager.AddUser ( user );
@@ -36,7 +36,8 @@ namespace DiscordBot.OS.Discord.CommandPipe.Commands
             }
 
             //  Save all users to file
-            await DataScanner.WriteToFile ( UserManager.GetUserList () );
+            DataScanner<User> scanner = new DataScanner<User> ( @"\Data\Users\STB.UP" );
+            await scanner.WriteToFile ( UserManager.GetUserList () );
             await ReplyAsync ( $"Jeg tilføjer {_name}, som dit navn." );
         }
 
@@ -49,7 +50,7 @@ namespace DiscordBot.OS.Discord.CommandPipe.Commands
             User user = UserManager.SearchByMention ( _mention );
 
             //  If the no user is found
-            if (user == null)
+            if ( user == null )
             {
                 await ReplyAsync ( $"Jeg kender ikke \"{_mention}\"!" );
             }

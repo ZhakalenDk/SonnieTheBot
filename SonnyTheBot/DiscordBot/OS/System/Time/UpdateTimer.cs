@@ -11,6 +11,10 @@ namespace DiscordBot.OS.System.Time
     public class UpdateTimer
     {
         /// <summary>
+        /// The name of this timer
+        /// </summary>
+        public string Name { get; }
+        /// <summary>
         /// The time between updates
         /// </summary>
         public Time Interval { get; set; }
@@ -21,14 +25,15 @@ namespace DiscordBot.OS.System.Time
         /// <summary>
         /// When the next trigger event should happen
         /// </summary>
-        private DateTime updateTime;
+        public DateTime UpdateTime { get; private set; }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="_interval">HOw long, in hours, the timer should wait</param>
-        public UpdateTimer ( Time _interval )
+        public UpdateTimer ( string _name, Time _interval )
         {
+            Name = _name;
             Interval = _interval;
             SetNewUpdate ();
         }
@@ -41,7 +46,7 @@ namespace DiscordBot.OS.System.Time
         {
             this.current = DateTime.Now;
 
-            if (this.current >= this.updateTime)
+            if (this.current >= this.UpdateTime)
             {
                 SetNewUpdate ();
                 return true;
@@ -59,8 +64,8 @@ namespace DiscordBot.OS.System.Time
 
             int minutes = ((DateTime.Now.Minute + Interval.minutes > 59) ? ((DateTime.Now.Minute + Interval.minutes) - 59) : (DateTime.Now.Minute + Interval.minutes));
             int seconds = ((DateTime.Now.Second + Interval.seconds > 59) ? ((DateTime.Now.Second + Interval.seconds) - 59) : (DateTime.Now.Second + Interval.hours));*/
-            this.updateTime = DateTime.Now.AddTime ( Interval );
-            Debug.Log.Message ( $"UpdateTimer - Setting new Update schedule: {this.updateTime.ToString ()}" );
+            this.UpdateTime = DateTime.Now.AddTime ( Interval );
+            Debug.Log.Message ( $"{Name} - Setting new Update schedule: {this.UpdateTime.ToString ()}" );
         }
     }
 }
