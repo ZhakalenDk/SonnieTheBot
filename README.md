@@ -36,7 +36,7 @@ Sonnie can take in suggestions from users. These will be posted in a _Suggestion
 Commands are executed in channel chat inside the Client application.
 Sonnie identifies a command by looking for the prefix defined by _"[Prefix](https://github.com/ZhakalenDk/SonnieTheBot/blob/master/SonnyTheBot/DiscordBot/bin/Debug/netcoreapp2.1/config.json)": ";"_.
 
-See [A List of commends here](https://github.com/ZhakalenDk/SonnieTheBot/blob/master/SonnyTheBot/DiscordBot/OS/Discord/CommandPipe/Commands/README.md)
+See a list of commands [here](https://github.com/ZhakalenDk/SonnieTheBot/blob/master/SonnyTheBot/DiscordBot/OS/Discord/CommandPipe/Commands/README.md)
 
 ## How To
 
