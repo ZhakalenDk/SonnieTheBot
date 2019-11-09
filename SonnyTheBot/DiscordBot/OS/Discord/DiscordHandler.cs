@@ -178,14 +178,14 @@ namespace DiscordBot.OS.Discord
 
                 #region Update Facebook log
                 //  Check for new Feacebook posts
-                if ( Instance.facebookUpdateTimer.ReadyToUpdate () )
-                {
-                    Debug.Log.Message ( "DiscordHandler - Updating Facebook-Feed" );
+                //if ( Instance.facebookUpdateTimer.ReadyToUpdate () )
+                //{
+                //    Debug.Log.Message ( "DiscordHandler - Updating Facebook-Feed" );
 
-                    FacebookHandler.Instance.SendHTTPRequest ().GetAwaiter ().GetResult ();
+                //    FacebookHandler.Instance.SendHTTPRequest ().GetAwaiter ().GetResult ();
 
-                    await FacebookHandler.Instance.PostLastFacebookPost ( Client );
-                }
+                //    await FacebookHandler.Instance.PostLastFacebookPost ( Client );
+                //}
                 #endregion
             }
         }
@@ -261,9 +261,13 @@ namespace DiscordBot.OS.Discord
             {
                 if ( _user.Activity.Type == ActivityType.Playing || _user.Activity.Type == ActivityType.Watching )
                 {
-                    Debug.Log.Message ( $"Program - User \"{_user.Username}\" is {_user.Activity.Type}: {_user.Activity.Name}" );
+                    //  If the user is at school tell the user to stop looking at porn
+                    if ( !UserManager.SearchByMention ( _user.Mention ).Free )
+                    {
+                        Debug.Log.Message ( $"Program - User \"{_user.Username}\" is {_user.Activity.Type}: {_user.Activity.Name}" );
 
-                    await _channel.SendMessageAsync ( $"Hold op med det porno, {_user.Mention}!" );
+                        await _channel.SendMessageAsync ( $"Hold op med det porno, {_user.Mention}!" );
+                    }
                 }
             }
         }
