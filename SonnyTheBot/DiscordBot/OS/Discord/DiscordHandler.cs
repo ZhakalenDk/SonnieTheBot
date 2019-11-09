@@ -178,14 +178,14 @@ namespace DiscordBot.OS.Discord
 
                 #region Update Facebook log
                 //  Check for new Feacebook posts
-                //if ( Instance.facebookUpdateTimer.ReadyToUpdate () )
-                //{
-                //    Debug.Log.Message ( "DiscordHandler - Updating Facebook-Feed" );
+                if ( Instance.facebookUpdateTimer.ReadyToUpdate () )
+                {
+                    Debug.Log.Message ( "DiscordHandler - Updating Facebook-Feed" );
 
-                //    FacebookHandler.Instance.SendHTTPRequest ().GetAwaiter ().GetResult ();
+                    FacebookHandler.Instance.SendHTTPRequest ().GetAwaiter ().GetResult ();
 
-                //    await FacebookHandler.Instance.PostLastFacebookPost ( Client );
-                //}
+                    await FacebookHandler.Instance.PostLastFacebookPost ( Client );
+                }
                 #endregion
             }
         }
